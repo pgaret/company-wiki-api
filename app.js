@@ -64,4 +64,13 @@ app.patch('/api/v1/features/:feature_id/:sub_id', (req, res) => {
   })
 })
 
+app.post('/api/v1/features/:feature_id/new', (req, res) => {
+  MongClient.connect(URL, function(err, db){
+    db.collection('subfeatures').insert({name: req.body.name, description: req.body.description})
+    db.collection('features').updateOne({_id: ObjectId(req.params.feature_id)},
+        {$push: {subfeatures: db.collection('subfeatures').findOne({name: req.body.name}).next()}}
+    )
+  })
+})
+
 module.exports = app;
