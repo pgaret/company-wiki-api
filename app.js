@@ -19,7 +19,7 @@ app.use(express.static(path.resolve(__dirname, '..', 'build')));
 const router = express.Router()
 
 var URL = app.settings.env == 'development' ? 'mongodb://localhost:27017/wiki' :
-        'mongodb://pgaret:password@ds161059.mlab.com:61059/heroku_4d7khr3z'
+        'mongodb://pgaret:password@ds141118.mlab.com:41118/heroku_17sgzk2s'
 
 //Building the API
 app.use('/api', router)
