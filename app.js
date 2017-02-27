@@ -24,10 +24,10 @@ var URL = app.settings.env == 'development' ? 'mongodb://localhost:27017/wiki' :
 //Building the API
 app.use('/api', router)
 
-app.get('/api/v1/people', (req, res) => {
+app.get('/api/v1/team', (req, res) => {
   MongoClient.connect(URL, function(err, db){
-    db.collection('users').find().toArray(function(err, people){
-      res.json({people: people})
+    db.collection('team').find().toArray(function(err, team){
+      res.json({team: team})
     })
   })
 })
