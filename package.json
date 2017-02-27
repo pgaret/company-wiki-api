@@ -1,0 +1,13 @@
+{
+  "name": "KustomerWiki",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "dependencies": {},
+  "scripts": {
+    "dev": "nodemon server.js",
+    "debug": "nodemon debug server.js"
+  }
+}

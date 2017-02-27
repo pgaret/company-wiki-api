@@ -1,15 +1,10 @@
 const express = require('express')
-const morgan = require('morgan')
 const path = require('path')
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 const ObjectId = require('mongodb').ObjectID
 const app = express()
 const cors = require('cors')
-const personSchema = require('./Person.js')
-const projectSchema = require('./Project.js')
-const featureSchema = require('./Feature.js')
-const subfeatureSchema = require('./Subfeature.js')
 
 //Setup body parser to get data from HTTP requests
 app.use(bodyParser.urlencoded({extended: true}))
@@ -18,15 +13,12 @@ app.use(bodyParser.json())
 //Allow CORS
 app.use(cors())
 
-// Setup logger
-app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
-
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 const router = express.Router()
 
-if app.settings.env == 'development' ? 'mongodb://localhost:27017/wiki' :
+var URL = app.settings.env == 'development' ? 'mongodb://localhost:27017/wiki' :
         'mongodb://pgaret:password@ds161059.mlab.com:61059/heroku_4d7khr3z'
 
 //Building the API
