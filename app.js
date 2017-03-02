@@ -35,7 +35,6 @@ app.get('/api/v1/team', (req, res) => {
 app.get('/api/v1/projects', (req, res) => {
   MongoClient.connect(URL, function(err, db){
     db.collection('projects').find().toArray(function(err, projects){
-      console.log(projects)
       res.json({projects: projects})
     })
   })
@@ -65,11 +64,14 @@ app.patch('/api/v1/features/:feature_id/:sub_id', (req, res) => {
 })
 
 app.post('/api/v1/features/:feature_id/new', (req, res) => {
-  MongClient.connect(URL, function(err, db){
-    db.collection('subfeatures').insert({name: req.body.name, description: req.body.description})
-    db.collection('features').updateOne({_id: ObjectId(req.params.feature_id)},
-        {$push: {subfeatures: db.collection('subfeatures').findOne({name: req.body.name}).next()}}
-    )
+  MongoClient.connect(URL, function(err, db){
+    db.collection('subfeatures').insert({name: req.body.name, description: req.body.description}).then(function(err, result){
+      db.collection('subfeatures').findOne({name: req.body.name}).then(function(err, resulter){
+        db.collection('features').updateOne({_id: ObjectId(req.params.feature_id)}, {$push: {subfeatures: err}}, ()=>{
+          res.json({result: err})
+        })
+      })
+    })
   })
 })
 
