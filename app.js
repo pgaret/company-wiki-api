@@ -75,4 +75,14 @@ app.post('/api/v1/features/:feature_id/new', (req, res) => {
   })
 })
 
+app.post('/api/v1/features/new', (req, res) => {
+  MongoClient.connect(URL, function(err, db){
+    db.collection('features').insert({name: req.body.name, subfeatures: []}).then(function(err, result){
+      db.collection('features').findOne({name: req.body.name}).then(function(errs, resulter){
+        res.json(errs)
+      })
+    })
+  })
+})
+
 module.exports = app;
